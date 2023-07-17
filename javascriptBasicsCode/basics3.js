@@ -45,3 +45,12 @@ console.log("Does this array contains specific element ???  "+marks.includes(500
 //getting sub array from main array with slice method 
 var subMarks= marks.slice(1,4)
 console.log(subMarks)
+
+
+//get sum of all elements of an array 
+var sum=0
+for(var r=0;r<marks.length;r++){
+sum=sum+marks[r]
+}
+console.log("Sum of all the elements of array is --<"+sum)
+
