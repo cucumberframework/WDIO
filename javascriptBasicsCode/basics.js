@@ -15,8 +15,11 @@ console.log(typeof(d))
 
 
 
-//difference between var and let keyword
-//we cannot redeclare variable with let keyword but possible with var
+//difference between var and let and const keyword
+//we cannot redeclare variable with let keyword but possible with var, with let we can reassign the variable but cannot be redeclated 
+//with var we can redeclare the variable 
+
+//with const we cannot reassign and redeclare 
 
 //single line comment 
 
