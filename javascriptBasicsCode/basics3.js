@@ -92,5 +92,4 @@ let sortingInt=[1,152,3,200,6,7,8,85,10,11,1120,13,174,195,146,167,138,159,210]
 console.log(sortingInt.sort((a,b)=>a-b))
 
 
-//Tutorial 15 
 
