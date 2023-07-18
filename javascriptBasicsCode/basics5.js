@@ -16,5 +16,21 @@ console.log(splittedString)
 
 let date1="10"
 let date2="15"
-let dateDifference= parseInt(date2)-parseInt(date1)
+let dateDifference= parseInt(date2)-parseInt(date1)             //parseInt will convert string to Integer 
 console.log(dateDifference)
+
+//convert string to integer 
+console.log(dateDifference.toString())
+
+//Tutorial 15 
+
+//check how many times the occourance of string happend in 
+let count=0
+
+let day1="tuesday is funday"
+let value=day1.indexOf("day")
+while(value!=-1){ 
+    count++
+    let finalC= day1.indexOf("day",value+1)
+}
+console.log("Count is : "+count)
