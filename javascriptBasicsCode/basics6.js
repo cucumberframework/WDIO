@@ -8,7 +8,7 @@ let person = {
         console.log(this.firstName + this.lastName)
     }
 }
-
+console.log(person.fullName())
 console.log(person.firstName)
 
 //method 2 to access the property
@@ -35,4 +35,3 @@ for (let key in person) {
     console.log("Key is :" + key + " and value is :" + person[key])
 }
 
-console.log(person.fullName())

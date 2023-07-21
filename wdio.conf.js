@@ -1,4 +1,4 @@
-export const config = {
+exports.config = {
     //
     // ====================
     // Runner Configuration
@@ -23,7 +23,8 @@ export const config = {
     // will be called from there.
     //
     specs: [
-        './Y'
+        './javascriptBasicsCode/test/specs/*.js'
+        //F:\WDIO_Learning\javascriptBasicsCode\test\specs\firstTest.js
     ],
     // Patterns to exclude.
     exclude: [
@@ -281,4 +282,5 @@ export const config = {
     */
     // onReload: function(oldSessionId, newSessionId) {
     // }
+    autoSuggestions: true, // Enable autosuggestions
 }

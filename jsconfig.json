@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "types": [
+            "node",
+            // "webdriverio/sync",
+            "@wdio/globals/types",
+            "@wdio/mocha-framework"
+        ]
+    },
+    "include": [
+        "javascriptBasicsCode/test/specs/*.js",
+        //F:\WDIO_Learning\javascriptBasicsCode
+        "**/*.json",
+        "node_modules/@wdio/sync",
+        "node_modules/@wdio/mocha-framework"
+    ]
+}
