@@ -23,9 +23,15 @@ describe('Smartoffice Application', async () => {
         await browser.pause(5000)
         await $("=Create survey").click()
         await $("//input[@placeholder='Search templates']").waitForDisplayed({ timeout: 5000 })
-        console.log("Texxt to be displayed="+await $("//span[contains(text(),'Customer Satisfaction Template')]").getText())
+        console.log("Texxt to be displayed=" + await $("//span[contains(text(),'Customer Satisfaction Template')]").getText())
+        //dynamic wait added to wait until Customer Satisfaction Template is displayed 
+        await browser.waitUntil(async () => await $("//span[contains(text(),'Customer Satisfaction Template')]").isDisplayed(), { timeout: 20000 })
         await $("//span[contains(text(),'Customer Satisfaction Template')]").click()
-        browser.pause(6000)
+
+        //waiting until preview button is displayed while creating new survey 
+        await browser.waitUntil(async () => (await $("#surveyPreviewTab")).isDisplayed()), { timeout: 5000 }
+
+
 
 
 
