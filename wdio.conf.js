@@ -23,7 +23,7 @@ exports.config = {
     // will be called from there.
     //
     specs: [
-        './javascriptBasicsCode/test/specs/*.js'
+        './javascriptBasicsCode/test/specs/surveyMonkey.js'
         //F:\WDIO_Learning\javascriptBasicsCode\test\specs\firstTest.js
     ],
     // Patterns to exclude.
@@ -133,7 +133,7 @@ exports.config = {
     // See the full list at http://mochajs.org/
     mochaOpts: {
         ui: 'bdd',
-        timeout: 60000
+        timeout: 600000
     },
     //
     // =====
