@@ -1,4 +1,5 @@
-class LoginPage {
+const reusable=require('../pageObjects/ReusableUtils')
+class LoginPage  extends reusable{
 
     get loginButton() {
 
@@ -28,6 +29,8 @@ class LoginPage {
 
 
     async login(userName, password) {
+    //    this.clickOnWebElement(this.loginButton)
+    //     this.waitForElement(this.loginButton)
         await this.loginButton.click()
         await this.userName.setValue(userName)
         await this.submitButton.click()
@@ -36,6 +39,7 @@ class LoginPage {
         await browser.pause(15000)
 
     }
+    
 
 
 

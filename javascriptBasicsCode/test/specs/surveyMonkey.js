@@ -1,6 +1,8 @@
 const loginPage = require('../pageObjects/loginPage')
 const homepage = require('../pageObjects/HomePage')
 const exploreTemplate = require('../pageObjects/ExploreTemplates')
+const createSurvey = require('../pageObjects/CreateSurveyPage')
+const surveyDetailsPage = require('../pageObjects/SurveyDetails')
 const fs = require('fs')
 const credentials = JSON.parse(fs.readFileSync('javascriptBasicsCode/testData/smLogin.json'))
 describe('Survey monkey ', async () => {
@@ -16,56 +18,93 @@ describe('Survey monkey ', async () => {
             await homepage.priceAndplans.click()
             await browser.waitUntil(async () => await homepage.createSurveyButton.isDisplayed(), { timeout: 10000 })
             await homepage.createSurveyButton.click()
-            // await browser.waitUntil(async () => (await exploreTemplate.searchTemplates).isDisplayed(), { timeout: 30000 })
 
             //clicking in Start from scratch button 
-            await $("div[class*='wds-icon-svg sm-g']").click()
+            await createSurvey.startFromScratch.waitForDisplayed({ timeout: 30000 })
+            await createSurvey.startFromScratch.click()
 
-            //Entering value in New survey box 
-            await $("#surveyTitle").setValue("TestSurvey")
+            //Entering survey details 
+            await createSurvey.surveyTitle.setValue("TestSurvey")
 
             //clicking on create survey button 
+            await createSurvey.createSurveyButton.click()
 
-            await $("button[class*='wds-button wds-button--primary wds-button--solid wds-button--md sm-start-from-scratch-modal__footer-create-cta']").click()
+            //wait for New survey page is loaded             
+            await browser.pause(5000)
+            await browser.waitUntil(async () => (await surveyDetailsPage.buildOption.isDisplayed(), { timeout: 300000 }))
+            await surveyDetailsPage.buildOption.click()
 
-            //wait for New survey page is loaded 
-            //Enter first Question 
-            await browser.waitUntil(async() => (await $("#editTitle")).isDisplayed(), { timeout: 300000 })
-           
-            await $("#editTitle").setValue("How Often You use survey monkey? ")
+            //Selecting multichoice option 
+            await browser.waitUntil(async () => (await surveyDetailsPage.multiChoice.isDisplayed(), { timeout: 300000 }))
+            await surveyDetailsPage.multiChoice.click()
 
-            await $("#changeQType").click()
-            await $("a[data-action='MultipleChoiceQuestion']").click()
-            var choices= $$("div[id*='newChoice']")
+            //Entering title for the Question 1 
+            await browser.waitUntil(async () => (await surveyDetailsPage.q1Title.isDisplayed(), { timeout: 300000 }))
+            await surveyDetailsPage.q1Title.setValue("How Often You use survey monkey? ")
 
-            await choices[0].setValue('daily')
-            await choices[1].setValue('weekly')
-            await choices[2].setValue('monthly')
-            //await browser.pause(20000)
-            
-             //clicking on Next question 
-             await browser.waitUntil(async() => (await $(".editor-buttons a")).isClickable(), { timeout: 300000 })
 
-            //await $(".editor-buttons a").waitForDisplayed({timeout:20000,timeoutMsg:"Next Question button is NOT visible"})
-             await $(".editor-buttons a").click()
+            //Changing Question type to Multichoice if required 
+            await surveyDetailsPage.changeQTypeDropdown.click()
+            await surveyDetailsPage.selectMultiChoiceOPtion.click()
+            var allChoices = surveyDetailsPage.answerChoice
+            var answerValues = ['daily', 'weekly', 'monthly']
+            //Adding Answer choices 
+            await allChoices[0].setValue(answerValues[0])
+            await allChoices[1].setValue(answerValues[1])
+            await allChoices[2].setValue(answerValues[2])
 
-             //await browser.pause(20000)
-             await browser.waitUntil(async() => (await $("td.questionText div")).isClickable(), { timeout: 30000 })
-             await browser.waitUntil(async() => (await $("td.questionText div")).isClickable(), { timeout: 30000 })
-             
-             let buttonState= await $("td.questionText div").isClickable()
+
+            //Clicking on save button to save question 1
+            await browser.waitUntil(async () => (await surveyDetailsPage.saveButton.isClickable(), { timeout: 300000 }))
+            await surveyDetailsPage.saveButton.click()
+
+            //Waiting for the time till chcekbox question is available 
+            await browser.pause(10000)
+            await browser.waitUntil(async () => (await surveyDetailsPage.checkBoxesOption.isClickable(), { timeout: 20000 }))
+            await surveyDetailsPage.checkBoxesOption.click()
+
+            //Waiting and clicking on the Question 2 title 
+            await browser.waitUntil(async () => (await surveyDetailsPage.q1Title.isDisplayed(), { timeout: 300000 }))
+            await surveyDetailsPage.q1Title.setValue("Have You used survey monkey before?? ")
+
+            //changing the Question to checkbox question
+            await surveyDetailsPage.changeQTypeDropdown.click()
+            await surveyDetailsPage.checkBoxesOption.click()
+            var allChoices = surveyDetailsPage.answerChoice
+
+            //Adding Answer choices for the Question
+            await allChoices[0].setValue('Yes')
+            await allChoices[1].clearValue()
+            await allChoices[1].setValue('No')
+            await surveyDetailsPage.saveButton.click()
+
+            //valication for radio buttons 
+            expect(await surveyDetailsPage.radioButton).toHaveAttrContaining('class', 'radio-button-label-text', { message: "Multipicklist option is NOT available" })
+            //validation for checkbox 
+            expect(await surveyDetailsPage.checkBoxYes).toHaveAttrContaining('class', 'checkbox-button-label', { message: "Checkbox Questions are NOT available" })
+
+            await browser.pause(5000)
+            await $("#question-field-144682183").moveTo()
+            browser.pause(2000)
+            await $("=DELETE").click()
+
+            /*//await browser.pause(20000)
+            await browser.waitUntil(async () => (await $("td.questionText div")).isClickable(), { timeout: 30000 })
+            //await browser.waitUntil(async() => (await $("td.questionText div")).isClickable(), { timeout: 30000 })
+
+            let buttonState = await $("td.questionText div").isClickable()
             // var questions=$$("#editTitle")
-             await $("td.questionText div").click()
-             await $("td.questionText div").setValue("test")
-             await $("a[data-action='MultipleChoiceQuestion']").click()
-             await $("a[data-action='CheckboxQuestion']").click()
-             var choices1= $$("div[id*='newChoice']")
-             await choices1[0].setValue('Yes')
-             await choices1[1].setValue('No')
-             await $('=SAVE').click()
-             await browser.pause(15000)
-
-
+            await $("td.questionText div").click()
+            
+            await $("td.questionText div").setValue("test")
+            await $("a[data-action='MultipleChoiceQuestion']").click()
+            await $("a[data-action='CheckboxQuestion']").click()
+            var choices1 = $$("div[id*='newChoice']")
+            await choices1[0].setValue('Yes')
+            await choices1[1].setValue('No')
+            await $('=SAVE').click()
+            await browser.pause(15000)
+            */
 
 
 
